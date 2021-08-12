@@ -22,6 +22,7 @@ isLoading = false;
 currentPage = 1;
 totalPosts = 0;
 postsPerPage= 2;
+userId: any;
 userIsAuthenticated = false;
 private authStatusSub: Subscription = new Subscription;
 pageSize = [1,2,5,10];
@@ -32,6 +33,7 @@ constructor(public postsService: PostsService, private authService: AuthService)
 ngOnInit(){
   this.isLoading = true;
    this.postsService.getPosts(this.postsPerPage,this.currentPage);
+   this.userId = this.authService.getUserId();
    this.postsSub = this.postsService.getPostUpdateListener()
    .subscribe((postData:{posts : Post[], postCount: number}) => {
          this.isLoading = false;
@@ -43,6 +45,7 @@ ngOnInit(){
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
          this.userIsAuthenticated = isAuthenticated ;
+         this.userId = this.authService.getUserId();
       });
 }
 
