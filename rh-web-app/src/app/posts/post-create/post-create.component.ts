@@ -20,7 +20,6 @@ export class PostCreateComponent implements OnInit {
   private mode ='create';
   private postId: any;
 
-
   constructor(
     public postsService: PostsService,
     public route: ActivatedRoute
