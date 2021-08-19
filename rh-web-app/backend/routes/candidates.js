@@ -1,16 +1,17 @@
 const express = require('express');
 const multer = require("multer");
+const candidat = require('../models/candidat');
 
-const Post = require('../models/post');
+const Candidat = require('../models/candidat');
 const router = express.Router();
-const checkAuth = require("../middleware/check-auth");
-const MIME_TYPE_MAP = {
+/* const checkAuth = require("../middleware/check-auth"); */
+/* const MIME_TYPE_MAP = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
   'image/jpg': 'jpg'
-}
+} */
 
-const storage = multer.diskStorage({
+/* const storage = multer.diskStorage({
   destination: (req, file, cb)=> {
     const isValid = MIME_TYPE_MAP[file.mimetype];
     let error = new Error("Invalid mime type");
@@ -24,29 +25,28 @@ const storage = multer.diskStorage({
     const ext = MIME_TYPE_MAP[file.mimetype];
     cb(null, name + '-' + Date.now() + '-' + ext);
   }
-});
+}); */
 
-router.post("" ,checkAuth ,(req,res,next)=> {
-  const url = req.protocol + '://' +req.get("host");
-  const post = new Post( {
-  jobtitle : req.body.jobtitle,
-  description: req.body.desc,
-  skills: req.body.skills,
-  exp: req.body.exp,
-  creator :  req.userData.userId
+router.post("/candidates" ,(req,res,next)=> {
+ /*  const url = req.protocol + '://' +req.get("host"); */
+  const post = new Candidat( {
+    email: req.body.email,
+    fullname: req.body.fullname,
+    cin: req.body.cin,
+    age: req.body.age
   });
-  post.save().then(createdPost => {
+  candidat.save().then(createdCandidat => {
    res.status(201).json({
-     message: 'Post added successfuly',
+     message: 'Apply added successfuly',
      post: {
-       ...createdPost,
-       id: createdPost._id
+       ...createdCandidat,
+       id: createdCandidat._id
      }
    });
   });
 });
 
-router.put(
+/* router.put(
   "/:id", checkAuth,
 
   (req, res, next)=> {
@@ -55,49 +55,40 @@ router.put(
     const url = req.protocol + '://' +req.get("host");
     imagePath = url + "/images/"+ req.file.filename ;
    }*/
- const post = new Post({
+ /* const candidat = new candidat({
    _id: req.body.id,
-   jobtitle: req.body.jobtitle,
-   description: req.body.description,
-   skills: req.body.skills,
-   exp: req.body.exp,
-   creator: req.userData.userId
+   email: req.body.email,
+   fullname: req.body.fullname,
+   cin: req.body.cin,
+   age: req.body.age
  });
- console.log(post);
- Post.updateOne({_id: req.params.id, creator : req.userData.userId},post).then(result => {
-   if(result.nModified > 0){
-    res.status(200).json({ message : "Update successful !"});
-   }else {
-    res.status(401).json({ message : "not authorized"});
-   }
- })
-});
-
-router.get("", (req ,res, next) => {
+ console.log(candidat);
+});   */
+router.get("/candidates", (req ,res, next) => {
   const pageSize = +req.query.pageSize;
   const currentPage = +req.query.page;
-  const postQuery = Post.find();
-  let fetchedPosts;
+  const CandidatQuery = Candidat.find();
+  let fetchedCandidates;
   if(pageSize && currentPage){
-      postQuery
+    CandidatQuery
       .skip(pageSize * (currentPage - 1))
       .limit(pageSize);
   }
- postQuery
+ CandidatQuery
  .then(documents => {
-      fetchedPosts = documents;
-      return Post.count();
+    fetchedCandidates = documents;
+      return Candidates.count();
    })
    .then(count => {
     res.status(200).json({
       message:"Posts fetched successfuly ",
-      posts: fetchedPosts,
-      maxPosts: count
+      candidates: fetchedCandidates,
+      maxCandidates: count
  });
 });
 });
 
-router.get("/:id",(req ,res, next)=> {
+/* router.get("/:id",(req ,res, next)=> {
  Post.findById(req.params.id).then(post => {
    if(post){
      res.status(200).json(post);
@@ -105,9 +96,9 @@ router.get("/:id",(req ,res, next)=> {
      res.status(404).json({message: 'Post not found !'});
    }
  })
-});
+}); */
 
-router.delete("/:id",checkAuth, (req,res, next)=> {
+/* router.delete("/:id",checkAuth, (req,res, next)=> {
  Post.deleteOne({_id: req.params.id, creator : req.userData.userId}).then(result => {
   if(result.n > 0){
     res.status(200).json({ message : "Deletion successful !"});
@@ -116,6 +107,16 @@ router.delete("/:id",checkAuth, (req,res, next)=> {
    }
  });
 
-});
+});*/
+router.get("/candidates/:id",(req ,res, next)=> {
+  Post.findById(req.params.id).then(joboffer => {
+    if(joboffer){
+      res.status(200).json(joboffer);
+    }else {
+      res.status(404).json({message: 'joboffer not found !'});
+    }
+  })
+ });
+
 
 module.exports = router;

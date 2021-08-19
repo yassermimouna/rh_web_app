@@ -1,7 +1,8 @@
-export interface Post {
+export interface Jobform {
   id : string ;
-  title : string;
-  content: string;
-  imagePath: string;
+  jobtitle : string;
+  description: string;
+  skills: string;
+  exp: string;
   creator: string;
 }

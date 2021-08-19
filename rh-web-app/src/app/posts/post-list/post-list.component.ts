@@ -2,7 +2,7 @@ import { Component , OnDestroy, OnInit} from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
 import { Subscription } from "rxjs";
 import { PostsService } from "../posts.service";
-import { Post } from "../post.model";
+import { Jobform } from "../post.model";
 import { AuthService } from "src/app/auth/auth.service";
 
 
@@ -17,7 +17,7 @@ export class Postlistcomp implements OnInit,OnDestroy{
     {title: 'Second post', content: 'This is the second post\'s content'},
     {title: 'Third post', content: 'This is the third post\'s content'}
   ]; */
-posts: Post[] = [];
+posts: Jobform[] = [];
 isLoading = false;
 currentPage = 1;
 totalPosts = 0;
@@ -35,7 +35,7 @@ ngOnInit(){
    this.postsService.getPosts(this.postsPerPage,this.currentPage);
    this.userId = this.authService.getUserId();
    this.postsSub = this.postsService.getPostUpdateListener()
-   .subscribe((postData:{posts : Post[], postCount: number}) => {
+   .subscribe((postData:{posts : Jobform[], postCount: number}) => {
          this.isLoading = false;
          this.totalPosts = postData.postCount;
          this.posts = postData.posts ;

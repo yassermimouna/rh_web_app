@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-spinner *ngIf="false">
+  </mat-spinner>
+  <form [formGroup]="form" (submit)="onApply()" *ngIf="!isLoading">
+<h2>APPLY FOR JOBOFFER</h2>
+<h4>Applying for {{job}}</h4>
+    <mat-form-field>
+    <input
+    matInput
+    type="text"
+    formControlName="email"
+    placeholder="email">
+  </mat-form-field>
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      formControlName="fullname"
+      placeholder="full name">
+    </mat-form-field>
+    <mat-form-field>
+    <div>
+      <input
+      matInput
+      type="text"
+      formControlName="cin"
+      placeholder="Cin N°">
+     </div>
+     </mat-form-field>
+    <mat-form-field>
+      <input
+      matInput
+      formControlName="age"
+      placeholder="age">
+    </mat-form-field>
+
+<!--     //resume path -->
+    <button
+    mat-raised-button
+    color= "primary"
+    type="submit">APPLY NOW</button>
+
+  </form>
+</mat-card>

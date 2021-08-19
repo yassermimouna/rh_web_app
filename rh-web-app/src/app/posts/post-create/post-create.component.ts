@@ -26,15 +26,33 @@ export class PostCreateComponent implements OnInit {
     ) {}
 
   ngOnInit(){
-    this.form = new FormGroup ({
+    /* this.form = new FormGroup ({
         title : new FormControl(null, {
           validators: [Validators.required,Validators.minLength(3)]}),
+
         content: new FormControl(null, {validators : [Validators.required]}),
         image: new FormControl(null, {
           validators: [Validators.required],
           asyncValidators: [mimeType]
         })
-    });
+    }); */
+
+    this.form = new FormGroup({
+      jobtitle: new FormControl(null, {
+        validators: []
+      }),
+      description: new FormControl(null, {
+        validators: []
+      }),
+      skills: new FormControl(null, {
+        validators: []
+      }),
+      exp: new FormControl(null, {
+        validators: []
+      }),
+
+  });
+
       this.route.paramMap.subscribe((paramMap: ParamMap) =>{
         if (paramMap.has('postId')){
            this.mode = 'edit';
@@ -44,17 +62,18 @@ export class PostCreateComponent implements OnInit {
             this.isLoading = false;
              this.post = {
                id : postData._id,
-               title : postData.title,
-               content: postData.content,
-               imagePath: postData.imagePath,
+               jobtitle: postData.jobtitle,
+               description: postData.description,
+               skills: postData.skills,
+               exp: postData.exp,
                creator: postData.creator
               };
             this.form.setValue({
-              title: this.post.title,
-              content: this.post.content,
-              image: this.post.imagePath
-
-          });
+               jobtitle: this.post.jobtitle,
+               description: this.post.description,
+               skills: this.post.skills,
+               exp: this.post.exp
+              });
            });
         } else {
           this.mode ='create';
@@ -63,7 +82,7 @@ export class PostCreateComponent implements OnInit {
       });
   }
 
-  onImagePicked(event: Event) {
+ /*  onImagePicked(event: Event) {
     let htmlFiles = (event.target as HTMLInputElement).files;
     let file : Blob = new Blob();
     if (htmlFiles != null) {
@@ -76,7 +95,7 @@ export class PostCreateComponent implements OnInit {
       this.imagePreview = reader.result;
     };
     reader.readAsDataURL(file);
-  }
+  } */
   onSavepost(){
      if(this.form.invalid) {
       return;
@@ -84,12 +103,19 @@ export class PostCreateComponent implements OnInit {
     this.isLoading = true;
     if(this.mode === 'create'){
       this.postsService.addPost(
-        this.form.value.title,
-        this.form.value.content,
-        this.form.value.image
+        this.form.value.jobtitle,
+        this.form.value.description,
+        this.form.value.skills,
+        this.form.value.exp
         );
     }else {
-      this.postsService.updatePost(this.postId, this.form.value.title, this.form.value.content,this.form.value.image);
+      this.postsService.updatePost(
+        this.postId,
+        this.form.value.jobtitle,
+        this.form.value.description,
+        this.form.value.skills,
+        this.form.value.exp
+        );
     }
     this.form.reset();
   }

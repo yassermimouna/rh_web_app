@@ -11,6 +11,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,8 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
+import { ApplicationCreateComponent } from './candidates/application-create/application-create.component';
+import { CandidateListComponent } from './candidates/candidate-list/candidate-list.component';
 
 
 @NgModule({
@@ -32,7 +35,9 @@ import { ErrorComponent } from './error/error.component';
     Postlistcomp,
     LoginComponent,
     SignupComponent,
-    ErrorComponent
+    ErrorComponent,
+    ApplicationCreateComponent,
+    CandidateListComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +53,8 @@ import { ErrorComponent } from './error/error.component';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor , multi: true},
