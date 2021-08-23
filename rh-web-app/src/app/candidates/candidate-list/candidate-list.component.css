@@ -2,3 +2,24 @@ h2{
   text-align : center;
   font-weight:bold;
 }
+mat-spinner{
+  margin : auto;
+}
+mat-expansion-panel-header {
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+div {
+  line-height: 200%;
+  letter-spacing: 2px;
+}
+
+div.b {
+  font-weight: bold;
+}
+
+:host {
+  display: block;
+  margin-top : 1rem;
+}

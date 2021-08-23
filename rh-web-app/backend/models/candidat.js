@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
-const uniqueValidator = require("mongoose-unique-validator");
 
 const candidatSchema = mongoose.Schema({
-  email: { type: String, required: true, unique: true},
+  email: { type: String, required: true},
   fullname: { type: String, required: true},
-  cin: { type: String, required: true},
-  age: { type: String, required: true},
-  resumePath: { type: String, required: true}
+  cin: { type: Number, required: true},
+  age: { type: Number, required: true},
+  postId: { type: mongoose.Schema.Types.ObjectId,ref: "Post" , required: true}
+ /*  resumePath: { type: String, required: true} */
 });
 
-candidatSchema.plugin(uniqueValidator);
-module.exports = mongoose.model('Candidat',candidatSchema);
+module.exports = mongoose.model('candidat',candidatSchema);

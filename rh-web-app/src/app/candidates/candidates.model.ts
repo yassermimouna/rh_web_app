@@ -3,6 +3,6 @@ export interface Candidates{
   email: string;
   fullname : string;
   cin: string;
-  age: string;
+  age: number;
   resumePath: string;
 }

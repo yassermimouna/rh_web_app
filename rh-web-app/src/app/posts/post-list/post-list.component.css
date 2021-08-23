@@ -29,3 +29,25 @@ h2{
   text-align : center;
   font-weight:bold;
 }
+mat-expansion-panel-header {
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+div {
+  line-height: 200%;
+  letter-spacing: 2px;
+}
+
+div.b {
+  font-weight: bold;
+}
+
+.count{
+  float: left !important;
+  left: 10px !important;
+  position: absolute !important;
+  margin-top: 1%;
+  margin-left: 1%;
+}
+

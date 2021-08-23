@@ -51,27 +51,31 @@ export class ApplicationCreateComponent implements OnInit {
             exp: postData.exp,
             creator: postData.creator
           };
-          console.log(this.post.jobtitle);
+          /* console.log(this.post.jobtitle); */
           this.job = this.post.jobtitle;
-          
+
         });
       }
     });
   }
 
   onApply(){
-
- /*    if(this.form.invalid) {
+  if(this.form.invalid) {
       return;
     }else {
       this.candidatesService.addCandidat(
-        this.form.value.jobtitle,
-        this.form.value.description,
-        this.form.value.skills,
-        this.form.value.exp
+        this.form.value.email,
+        this.form.value.fullname,
+        this.form.value.cin,
+        this.form.value.age,
+        this.postId
       );
     }
-    this.form.reset(); */
+    this.form.reset();
   }
+
+
+
+
 
 }

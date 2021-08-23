@@ -5,4 +5,5 @@ export interface Jobform {
   skills: string;
   exp: string;
   creator: string;
+  totalCandidates?: number;
 }

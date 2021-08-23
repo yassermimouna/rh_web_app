@@ -27,14 +27,15 @@ const router = express.Router();
   }
 }); */
 
-router.post("/candidates" ,(req,res,next)=> {
- /*  const url = req.protocol + '://' +req.get("host"); */
-  const post = new Candidat( {
+router.post("" , (req,res,next)=> {
+  const url = req.protocol + '://' +req.get("host");
+  const candidat = new Candidat( {
     email: req.body.email,
     fullname: req.body.fullname,
     cin: req.body.cin,
-    age: req.body.age
-  });
+    age: req.body.age,
+    postId: req.body.postId
+    });
   candidat.save().then(createdCandidat => {
    res.status(201).json({
      message: 'Apply added successfuly',
@@ -64,20 +65,21 @@ router.post("/candidates" ,(req,res,next)=> {
  });
  console.log(candidat);
 });   */
-router.get("/candidates", (req ,res, next) => {
-  const pageSize = +req.query.pageSize;
+router.get("", (req ,res, next) => {
+  const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  const CandidatQuery = Candidat.find();
+  const candidatQuery = Candidat.find({postId: req.query.postId});
+
   let fetchedCandidates;
   if(pageSize && currentPage){
-    CandidatQuery
+    candidatQuery
       .skip(pageSize * (currentPage - 1))
       .limit(pageSize);
   }
- CandidatQuery
+ candidatQuery
  .then(documents => {
     fetchedCandidates = documents;
-      return Candidates.count();
+      return fetchedCandidates.length;
    })
    .then(count => {
     res.status(200).json({
@@ -87,16 +89,6 @@ router.get("/candidates", (req ,res, next) => {
  });
 });
 });
-
-/* router.get("/:id",(req ,res, next)=> {
- Post.findById(req.params.id).then(post => {
-   if(post){
-     res.status(200).json(post);
-   }else {
-     res.status(404).json({message: 'Post not found !'});
-   }
- })
-}); */
 
 /* router.delete("/:id",checkAuth, (req,res, next)=> {
  Post.deleteOne({_id: req.params.id, creator : req.userData.userId}).then(result => {
@@ -108,7 +100,7 @@ router.get("/candidates", (req ,res, next) => {
  });
 
 });*/
-router.get("/candidates/:id",(req ,res, next)=> {
+router.get("/:id",(req ,res, next)=> {
   Post.findById(req.params.id).then(joboffer => {
     if(joboffer){
       res.status(200).json(joboffer);
@@ -117,6 +109,17 @@ router.get("/candidates/:id",(req ,res, next)=> {
     }
   })
  });
+
+ router.delete("/:id",(req,res, next)=> {
+  Candidat.deleteOne({_id: req.params.id}).then(result => {
+   if(result.n > 0){
+     res.status(200).json({ message : "Deletion successful !"});
+    }else {
+     res.status(401).json({ message : "not authorized"});
+    }
+  });
+ });
+
 
 
 module.exports = router;

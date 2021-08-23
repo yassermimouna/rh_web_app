@@ -16,7 +16,7 @@ const routes: Routes = [
   { path : 'signup', component: SignupComponent},
   { path : 'apply', component: ApplicationCreateComponent},
   { path : 'apply/:postId', component: ApplicationCreateComponent},
-  { path : 'candidates', component: CandidateListComponent}
+  { path : 'candidates/:postId/:title', component: CandidateListComponent}
 ];
 
 @NgModule({

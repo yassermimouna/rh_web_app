@@ -59,25 +59,22 @@ export class PostsService {
   }
 
 
-  addPost(jobtitle: string , description: string, skills: string, exp: string){
+  addPost(jobtitle: string, description: string, skills: string, exp: string) {
     /* const postData = new FormData();
     postData.append("jobtitle",jobtitle);
     postData.append("description",description);
     postData.append("skills", skills);
     postData.append("exp", exp); */
-
-const postData = {
-  jobtitle : jobtitle,
-  desc: description,
-  skills: skills,
-  exp: exp,
-}
-
-    this.http.post<{message: string, post: Jobform}>('http://localhost:3000/api/posts', postData)
-    .subscribe((responseData)=> {
-      this.router.navigate(["/"]);
-    });
-
+    const postData = {
+      jobtitle: jobtitle,
+      desc: description,
+      skills: skills,
+      exp: exp
+    }
+    this.http.post<{ message: string, post: Jobform }>('http://localhost:3000/api/posts', postData)
+      .subscribe((responseData) => {
+        this.router.navigate(["/"]);
+      });
   }
 
   updatePost(id: string, jobtitle: string, description: string, skills:string, exp: string){
